@@ -95,7 +95,7 @@
 						<label class="input-label" for="obs.type_of_visit">
 							Tipo de Visita<span class="required">*</span>
 						</label>
-						<select class="form-control input-section" id="obs.type_of_visit" required
+						<select class="form-control input-section serializable" id="obs.type_of_visit" required
 							name="obs.type_of_visit" data-concept="1981^TIPO DE ATENDIMENTO FAMILIAR^99DCT"
 							readonly="readonly">
 							<option value="">...</option>
@@ -1107,8 +1107,8 @@
 		}
 		else {
 			$('#obs\\.type_of_visit').val('...');
-			$('#obs\\.type_of_visit').prop('disabled', 'disabled');
 		}
+		$('#obs\\.type_of_visit').attr('disabled', 'disabled');
 
 		$('#encounter\\.encounter_datetime').change(function () {
 			if ($("#obs\\.attempt_number").val() === "6254^DATA DA SEGUNDA TENTATIVA DE BUSCA^99DCT") {
