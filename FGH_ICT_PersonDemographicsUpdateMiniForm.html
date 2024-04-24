@@ -366,7 +366,7 @@
         </div>
         <!-- FIM DO NAO FOI ACEITE -->
 
-            <div class="form-group" id="demographicsupdate_hiv_test" >
+            <div class="form-group demographicsupdate_hiv_test" >
                 <label class="input-label" for="demographicsupdate.hiv_test">Resultado da Testagem de HIV:</label>
                 <select class="form-control" id="demographicsupdate.hiv_test"
                         name="demographicsupdate.hiv_test" data-concept="23779^Teste de HIV^99DCT">
@@ -930,6 +930,16 @@
 
             }
         });
+
+       $('#demographicsupdate\\.htc_accepted').change(function () {
+           if($(this).val() == '1065^SIM^99DCT'){
+               $('.demographicsupdate_hiv_test').show();
+           } else {
+           $('.demographicsupdate_hiv_test').hide();
+           }
+        });
+
+       $('#demographicsupdate\\.htc_accepted').trigger('change');
 
 </script>
 

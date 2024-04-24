@@ -969,8 +969,12 @@
 		$('#obs\\.patient_followup').change(function () {
 			if ($(this).val() == "1066^NAO^99DCT") {
 				$('#patient_refused_to_return_div').show();
+				$('#data_combinada_div').hide();
+				$('#obs\\.data_combinada').hide();
 			} else {
 				$('#patient_refused_to_return_div').hide();
+				$('#data_combinada_div').show();
+				$('#obs\\.data_combinada').show();
 			}
 		});
 		$('#obs\\.patient_followup').trigger('change');
