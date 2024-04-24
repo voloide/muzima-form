@@ -582,8 +582,8 @@
             var datetime = $('#encounter\\.encounter_datetime').val();
             var datetimeBits = datetime.split(/\D/);
             var encounterDate = new Date(datetimeBits[2], datetimeBits[1] - 1, datetimeBits[0]);
-            if (enteredDate < encounterDate) {
-               errors[$(this).attr('name')] = "A data de entrega ao voluntário não pode ser anterior à data da visita.";
+            if (enteredDate > encounterDate) {
+               errors[$(this).attr('name')] = "A data de entrega ao voluntário não pode ser futura.";
             }
             toggleValidationMessages(errors);
          }
