@@ -342,6 +342,15 @@
         }
 
         var patientUuid = $('#patient\\.uuid').val();
+        
+        $('#demographicsupdate\\.hiv_test').change(function(){
+            if($(this).val() == "703^Positivo^99DCT"){
+                $('#patient_refered_section').show();
+        } else{
+            $('#patient_refered_section').hide();
+        }
+        });
+        $('#demographicsupdate\\.hiv_test').trigger('change');
 
         $('#relationshipTypeOptions').change(function () {
         
