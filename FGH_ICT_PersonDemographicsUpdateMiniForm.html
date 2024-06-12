@@ -14,14 +14,14 @@
         <script src="js/muzima.js"></script>
         <meta charset="utf-8">
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-        <title>Formulário ATS e Adicionar Contacto</title>
+        <title>Testagem contacto CI</title>
     </head>
 <body class="col-md-8 col-md-offset-2">
     <div id="result"></div>
     <form id="mini_registration_form" name="mini_registration_form">
         <div id="pre_populate_data">
         </div>
-        <h5 class="text-center">Formulário ATS e Adicionar Contacto</h5>
+        <h5 class="text-center">Testagem contacto CI</h5>
 
         <div class="section">
             <h6>Nome do Contacto</h6>
@@ -316,8 +316,8 @@
         <!-- NAO FOI ACEITE O SERVICO  -->
 
         <div class="form-group demographicsupdate_htc_not_accepted" id="demographicsupdate_htc_not_accepted" hidden="true">
-            <label for="obs.demographicsupdate_htc_not_accepted">
-                <h6>Motivos para não aceitar: <span class="required">*</span></h6>
+            <label class="input-label" for="obs.demographicsupdate_htc_not_accepted">
+                Motivos para não aceitar: <span class="required">*</span>
             </label>
 
             <select class="form-control" name="demographicsupdate_htc_not_accepted" id="obs.demographicsupdate_htc_not_accepted" data-concept="165493^MOTIVO PARA NAO ACEITAR O SERVIÇO DE HTC^99DCT" required>
@@ -355,7 +355,7 @@
                    name="demographicsupdate.relative_nid" type="text">
         </div>
 
-        <div class="form-group " id="demographicsupdate_hiv_care" hidden = "true">
+        <div class="form-group " id="demographicsupdate_hiv_care">
             <label class="input-label" for="obs.demographicsupdate_hiv_care">Em Cuidados de HIV?</label>
             <select class="form-control" id="obs.demographicsupdate_hiv_care"
                     name="demographicsupdate.hiv_care" data-concept="23780^Cuidados HIV^99DCT">
@@ -366,7 +366,7 @@
         </div>
         <!-- FIM DO NAO FOI ACEITE -->
 
-            <div class="form-group" id="demographicsupdate_hiv_test" >
+            <div class="form-group demographicsupdate_hiv_test" >
                 <label class="input-label" for="demographicsupdate.hiv_test">Resultado da Testagem de HIV:</label>
                 <select class="form-control" id="demographicsupdate.hiv_test"
                         name="demographicsupdate.hiv_test" data-concept="23779^Teste de HIV^99DCT">
@@ -904,10 +904,8 @@
 	  $('#obs\\.demographicsupdate_htc_not_accepted').change(function(){
 		if($(this).val() == '165494^POSITIVO NO PASSADO^99DCT'){
 			$('#demographicsupdate_relative_nid').show();
-			$('#demographicsupdate_hiv_care').show();
 		} else{
 
-			$('#demographicsupdate_hiv_care').hide();
 
 			if($('#demographicsupdate\\.child_at_risk_treatment').val() == '1065^Sim^99DCT'){
                 $('#demographicsupdate_relative_nid').show();
@@ -930,6 +928,16 @@
 
             }
         });
+
+       $('#demographicsupdate\\.htc_accepted').change(function () {
+           if($(this).val() == '1065^SIM^99DCT'){
+               $('.demographicsupdate_hiv_test').show();
+           } else {
+           $('.demographicsupdate_hiv_test').hide();
+           }
+        });
+
+       $('#demographicsupdate\\.htc_accepted').trigger('change');
 
 </script>
 

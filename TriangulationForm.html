@@ -97,8 +97,8 @@
                      <label class="input-label" for="obs.type_of_visit">
                         Tipo de Visita<span class="required">*</span>
                      </label>
-                     <select class="form-control input-section" id="obs.type_of_visit" required name="obs.type_of_visit"
-                        data-concept="1981^TIPO DE ATENDIMENTO FAMILIAR^99DCT" readonly="readonly" disabled>
+                     <select class="form-control input-section serializable" id="obs.type_of_visit" required name="obs.type_of_visit"
+                        data-concept="1981^TIPO DE ATENDIMENTO FAMILIAR^99DCT" readonly="readonly">
                         <option value="">...</option>
                         <option value="2161^VISITA DE APOIO^99DCT">Visita preventiva</option>
                         <option value="2160^VISITA DE BUSCA^99DCT">Visita de Reintegração</option>
@@ -582,8 +582,8 @@
             var datetime = $('#encounter\\.encounter_datetime').val();
             var datetimeBits = datetime.split(/\D/);
             var encounterDate = new Date(datetimeBits[2], datetimeBits[1] - 1, datetimeBits[0]);
-            if (enteredDate < encounterDate) {
-               errors[$(this).attr('name')] = "A data de entrega ao voluntário não pode ser anterior à data da visita.";
+            if (enteredDate > encounterDate) {
+               errors[$(this).attr('name')] = "A data de entrega ao voluntário não pode ser futura.";
             }
             toggleValidationMessages(errors);
          }
@@ -597,8 +597,8 @@
          var s = $('#encounter\\.encounter_datetime').val();
          var bits = s.split(/\D/);
          var encounterDate = new Date(bits[2], bits[1] - 1, bits[0]);
-         return enteredDate >= encounterDate;
-      }, "A data de entrega ao voluntário não pode ser anterior à data da visita."
+         return enteredDate <= encounterDate;
+      }, "A data de entrega ao voluntário não pode ser futura."
       );
 
       // attach 'nonFutureDate' class to perform validation.
@@ -732,8 +732,8 @@
       }
       else {
          $('#obs\\.type_of_visit').val('...');
-         $('#obs\\.type_of_visit').prop('disabled', 'disabled');
       }
+      $('#obs\\.type_of_visit').attr('disabled', 'disabled');
 
       var gaac = htmlDataStore.getObsByConceptId(patientuuid, 23724);
       gaac = JSON.parse(gaac);
