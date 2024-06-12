@@ -728,6 +728,8 @@
                 $('.demographicsupdate_htc_accepted').show();
             } else {
                 $('.demographicsupdate_htc_accepted').hide();
+                $('#demographicsupdate\\.hiv_test').val('');
+                $('#demographicsupdate\\.hiv_test').trigger('change');
             }
         });
         $('#demographicsupdate\\.htc_offered').trigger('change');
@@ -934,6 +936,8 @@
                $('.demographicsupdate_hiv_test').show();
            } else {
            $('.demographicsupdate_hiv_test').hide();
+           $('#demographicsupdate\\.hiv_test').val('');
+           $('#demographicsupdate\\.hiv_test').trigger('change');
            }
         });
 
