@@ -273,7 +273,7 @@
 											<input id="obs.reason_for_failure.vbg" type="checkbox"
 												name="obs.reason_for_failure" data-concept="2016^MOTIVO DE FALTA^99DCT"
 												value="6303^VIOLENCIA BASEADA NO GENERO^99DCT" required="required" />
-											VBG
+											Violência
 										</label>
 									</div>
 									<div class="form-group">
@@ -1101,18 +1101,23 @@
         $("#obs\\.elegibility_categories").val(combinedEligibilityCategories);
 
 
-		if ($("#obs\\.elegibility_categories").val().includes('Abandono')
-			|| $("#obs\\.elegibility_categories").val().includes('Faltoso')) {
-			$('#obs\\.type_of_visit').val("2160^VISITA DE BUSCA^99DCT");
-		} else if ($("#obs\\.elegibility_categories").val() === 'Elegível Carga Viral' || $("#obs\\.elegibility_categories").val() === 'Carga Viral Alta') {
-			$('#obs\\.type_of_visit').val("23914^VISITA AOS CASOS ESPECIAIS^99DCT");
-		} else if ($("#obs\\.elegibility_categories").val() === 'Preventiva') {
-			$('#obs\\.type_of_visit').val("2161^VISITA DE APOIO^99DCT");
-		}
-		else {
-			$('#obs\\.type_of_visit').val('...');
-		}
-		$('#obs\\.type_of_visit').attr('disabled', 'disabled');
+		let elegibilityValue = $("#obs\\.elegibility_categories").val();
+      let visitType;
+
+      // Determine the visitType based on elegibilityValue
+      if (elegibilityValue === 'Abandono' || elegibilityValue === 'Faltoso' || elegibilityValue.includes('Abandono') || elegibilityValue.includes('Faltoso')) {
+         visitType = "2160^VISITA DE BUSCA^99DCT";
+      } else if (elegibilityValue === 'Elegível Carga Viral' || elegibilityValue === 'Carga Viral Alta') {
+         visitType = "23914^VISITA AOS CASOS ESPECIAIS^99DCT";
+      } else if (elegibilityValue === 'Preventiva') {
+         visitType = "2161^VISITA DE APOIO^99DCT";
+      } else {
+         visitType = '...'; // Default value
+      }
+
+      // Set the value and disable the field
+      $('#obs\\.type_of_visit').val(visitType).attr('disabled', 'disabled');
+
 
 		$('#encounter\\.encounter_datetime').change(function () {
 			if ($("#obs\\.attempt_number").val() === "6254^DATA DA SEGUNDA TENTATIVA DE BUSCA^99DCT") {
