@@ -95,16 +95,14 @@
 						<label class="input-label" for="obs.type_of_visit">
 							Tipo de Visita<span class="required">*</span>
 						</label>
-						<select class="form-control input-section serializable" id="obs.type_of_visit" required
-							name="obs.type_of_visit" data-concept="1981^TIPO DE ATENDIMENTO FAMILIAR^99DCT"
-							readonly="readonly">
-							<option value="">...</option>
-							<option class="input-label" value="2161^VISITA DE APOIO^99DCT">Visita preventiva</option>
-							<option class="input-label" value="2160^VISITA DE BUSCA^99DCT">Visita de Reintegração
-							</option>
-							<option class="input-label" value="23914^VISITA AOS CASOS ESPECIAIS^99DCT">Visita aos casos
-								especiais</option>
-						</select>
+						<!-- Descrição visível para o utilizador -->
+						<input class="form-control input-section" id="obs.type_of_visit_label" type="text"
+							placeholder="Tipo de Visita" readonly="readonly" />
+
+						<!-- Valor codificado escondido (realmente enviado no formulário) -->
+						<input class="form-control" id="obs.type_of_visit" name="obs.type_of_visit" type="text"
+							data-concept="1981^TIPO DE ATENDIMENTO FAMILIAR^99DCT" required="required"
+							style="opacity:0; position:absolute; left:-9999px;" />
 					</div>
 					<div class="form-group">
 						<label class="input-label" for="encounter.encounter_datetime">Data da visita:<span
@@ -1102,21 +1100,29 @@
 
 
 		let elegibilityValue = $("#obs\\.elegibility_categories").val();
-      let visitType;
+		let visitType = "";
+		let visitLabel = "";
 
-      // Determine the visitType based on elegibilityValue
-      if (elegibilityValue === 'Abandono' || elegibilityValue === 'Faltoso' || elegibilityValue.includes('Abandono') || elegibilityValue.includes('Faltoso')) {
-         visitType = "2160^VISITA DE BUSCA^99DCT";
-      } else if (elegibilityValue === 'Elegível Carga Viral' || elegibilityValue === 'Carga Viral Alta') {
-         visitType = "23914^VISITA AOS CASOS ESPECIAIS^99DCT";
-      } else if (elegibilityValue === 'Preventiva') {
-         visitType = "2161^VISITA DE APOIO^99DCT";
-      } else {
-         visitType = '...'; // Default value
-      }
+		// Determina o tipo de visita com base na elegibilidade
+		if (elegibilityValue === 'Abandono' || elegibilityValue === 'Faltoso' ||
+			elegibilityValue.includes('Abandono') || elegibilityValue.includes('Faltoso')) {
+			visitType = "2160^VISITA DE BUSCA^99DCT";
+			visitLabel = "Visita de Reintegração";
+		} else if (elegibilityValue === 'Elegível Carga Viral' || elegibilityValue === 'Carga Viral Alta') {
+			visitType = "23914^VISITA AOS CASOS ESPECIAIS^99DCT";
+			visitLabel = "Visita aos casos especiais";
+		} else if (elegibilityValue === 'Preventiva') {
+			visitType = "2161^VISITA DE APOIO^99DCT";
+			visitLabel = "Visita preventiva";
+		} else {
+			visitType = "";
+			visitLabel = "";
+		}
 
-      // Set the value and disable the field
-      $('#obs\\.type_of_visit').val(visitType).attr('disabled', 'disabled');
+		// Atribui os valores aos campos
+		$('#obs\\.type_of_visit').val(visitType);
+		$('#obs\\.type_of_visit_label').val(visitLabel);
+
 
 
 		$('#encounter\\.encounter_datetime').change(function () {

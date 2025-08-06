@@ -97,13 +97,15 @@
                      <label class="input-label" for="obs.type_of_visit">
                         Tipo de Visita<span class="required">*</span>
                      </label>
-                     <select class="form-control input-section serializable" id="obs.type_of_visit" required name="obs.type_of_visit"
-                        data-concept="1981^TIPO DE ATENDIMENTO FAMILIAR^99DCT" readonly="readonly">
-                        <option value="">...</option>
-                        <option value="2161^VISITA DE APOIO^99DCT">Visita preventiva</option>
-                        <option value="2160^VISITA DE BUSCA^99DCT">Visita de Reintegração</option>
-                        <option value="23914^VISITA AOS CASOS ESPECIAIS^99DCT">Visita aos casos especiais</option>
-                     </select>
+                     <!-- Descrição visível para o utilizador -->
+                     <input class="form-control input-section" id="obs.type_of_visit_label" type="text"
+                           placeholder="Tipo de Visita" readonly="readonly" />
+
+                     <!-- Valor codificado escondido (realmente enviado no formulário) -->
+                     <input class="form-control" id="obs.type_of_visit" name="obs.type_of_visit" type="text"
+                           data-concept="1981^TIPO DE ATENDIMENTO FAMILIAR^99DCT" required="required" 
+                           style="opacity:0; position:absolute; left:-9999px;" />
+
                   </div>
                   <div id="missed_consultation_div">
                      <div class="form-group" id="missed_consultation">
@@ -721,19 +723,27 @@
          combinedEligibilityCategories = (combinedEligibilityCategories !== "" ? combinedEligibilityCategories + ", " + category : category);
       });
       $("#obs\\.elegibility_categories").val(combinedEligibilityCategories);
+let typeOfVisitValue = '';
+let typeOfVisitLabel = '';
 
-      if ($("#obs\\.elegibility_categories").val().includes('Abandono')
-         || $("#obs\\.elegibility_categories").val().includes('Faltoso')) {
-         $('#obs\\.type_of_visit').val("2160^VISITA DE BUSCA^99DCT");
-      } else if ($("#obs\\.elegibility_categories").val() === 'Elegível Carga Viral' || $("#obs\\.elegibility_categories").val() === 'Carga Viral Alta') {
-         $('#obs\\.type_of_visit').val("23914^VISITA AOS CASOS ESPECIAIS^99DCT");
-      } else if ($("#obs\\.elegibility_categories").val() === 'Preventiva') {
-         $('#obs\\.type_of_visit').val("2161^VISITA DE APOIO^99DCT");
-      }
-      else {
-         $('#obs\\.type_of_visit').val('...');
-      }
-      $('#obs\\.type_of_visit').attr('disabled', 'disabled');
+if ($("#obs\\.elegibility_categories").val().includes('Abandono')
+   || $("#obs\\.elegibility_categories").val().includes('Faltoso')) {
+   typeOfVisitValue = "2160^VISITA DE BUSCA^99DCT";
+   typeOfVisitLabel = "Visita de Reintegração";
+} else if ($("#obs\\.elegibility_categories").val() === 'Elegível Carga Viral' || $("#obs\\.elegibility_categories").val() === 'Carga Viral Alta') {
+   typeOfVisitValue = "23914^VISITA AOS CASOS ESPECIAIS^99DCT";
+   typeOfVisitLabel = "Visita aos casos especiais";
+} else if ($("#obs\\.elegibility_categories").val() === 'Preventiva') {
+   typeOfVisitValue = "2161^VISITA DE APOIO^99DCT";
+   typeOfVisitLabel = "Visita preventiva";
+} else {
+   typeOfVisitValue = "";
+   typeOfVisitLabel = "";
+}
+
+$('#obs\\.type_of_visit').val(typeOfVisitValue);
+$('#obs\\.type_of_visit_label').val(typeOfVisitLabel);
+
 
       var gaac = htmlDataStore.getObsByConceptId(patientuuid, 23724);
       gaac = JSON.parse(gaac);
